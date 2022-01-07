@@ -1,0 +1,845 @@
+$light-pink: #d19cff;
+$violet: #771085;
+$dark-violet: #5B1b83;
+$cyan: #54DAEE;
+$light-blue: #5DD0D4;
+$weird-green: #4E9F97; 
+$weird-red: #ff006a;
+$white: white; 
+$black: black;
+$light-black: #303030;
+
+$navbar-height: 12vh;
+
+// GLOBAL
+html {
+    font-size: 22px;
+    @media screen and (max-width: 1682px) {
+        font-size: 19px;
+    }
+    @media screen and (max-width: 1442px) {
+        font-size: 16px;
+    }
+    @media screen and (max-width: 992px) {
+        font-size: 12px;
+    }
+    @media screen and (max-width: 402px) {
+        font-size: 8px;
+    }
+}
+a, a:visited, a:hover, a:active {
+    text-decoration: none;
+    cursor: pointer;
+    color: inherit;
+}
+ul {
+    list-style: none;
+}
+button {
+    cursor: pointer;
+}
+body {
+    @media screen and (orientation: portrait) {
+        margin-top: $navbar-height !important;
+    }
+}
+// CLASSES
+%control {
+    padding: .7em;
+    border-radius: .4em;
+    border: none;
+    font-size: 1em;
+    &:focus {
+        outline: none;
+    }
+    &::placeholder {
+        color: $violet;
+    }
+}
+// MIXINS
+@mixin font-lg {
+    font-size: 3em;
+}
+@mixin font-md {
+    font-size: 1.6em;
+}
+@mixin font-sm {
+    font-size: 1em;
+}
+@mixin centered {
+    text-align: center;
+}
+@mixin padding {
+    padding: 1em;
+}
+@mixin absolute {
+    z-index: 1;
+    position: absolute;
+    width: 100%;
+}
+@mixin viewport-height {
+    min-height: 100vh;
+}
+@mixin fixed-background {
+    background-attachment: fixed;
+}
+@mixin image-background {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+}
+@mixin circular {
+    border-radius: 100%;
+}
+// CONTROLS
+#fb-root {
+    @media screen and (max-width: 992px) {
+        display: none;
+    }
+}
+.app-column {
+    @include padding();
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 1;
+    flex-basis: 0%;
+    &.has-shadow {
+        box-shadow: 0 0 30px black;
+        margin: 30px;
+    }
+}
+.app-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex-basis: 0%;
+    flex-shrink: 1;
+    @media screen and (orientation: portrait) {
+        flex-direction: column;
+    }
+    &.is-reversed {
+        flex-direction: row-reverse;
+        @media screen and (orientation: portrait) {
+            flex-direction: column;
+        }
+    }
+    &.has-image {
+        @include image-background();
+    }
+    &.is-solid {
+        background-color: $white;
+    }
+    &.not-in-mobile {
+        @media screen and (orientation: portrait) {
+            display: none;
+        }
+    }
+    &.is-quarter {
+        background-position: center bottom;
+        min-height: 25vh;
+            @media screen and (orientation: portrait) {
+                min-height: 10vh;
+            }
+    }
+    &.is-half {
+        background-position: center bottom;
+        min-height: 45vh;
+            @media screen and (orientation: portrait) {
+                min-height: 15vh;
+            }
+    }
+    &.is-full {
+        @include viewport-height();
+        @media screen and (orientation: portrait) {
+            min-height: 25vh;
+        }
+    }
+    &.should-not-wrap {
+        flex-wrap: nowrap;
+    }
+    &.is-separator {
+        min-height: 15vh;
+    }
+    &.is-fixed {
+        @include fixed-background();
+    }
+    &.has-sm-padding {
+        padding: .5em 1em;
+    }
+    &.has-md-padding {
+        @media screen and (orientation: portrait) {
+            padding: 0 .5em !important;
+        }
+        padding: 2em 3em;
+    }
+    &.has-lg-padding {
+        @media screen and (orientation: portrait) {
+            padding: 4em .5em !important;
+        }
+        padding: 4em 5em;
+    }
+}
+.app-button-list {
+    margin: 0;
+    padding: 0;
+    background-color: $light-black;
+    border-radius: .5em;
+    &-item {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        &:nth-child(1) {
+            padding-top: 1em;
+        }
+        &:last-child() {
+            padding-bottom: 1em;
+        }
+        color: $light-blue;
+        text-transform: uppercase;
+        text-align: center;
+        padding: .3em 2em;
+    }
+}
+.app-loading {
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    background-color: $light-blue;
+    &-logo {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        animation: heart-beat 2s infinite;
+        animation-timing-function: ease-out;
+        animation-direction: alternate;
+        img {
+            flex: 1 1;
+            width: 10em;
+            @keyframes heart-beat {
+                from { opacity: .3; }
+                to { opacity: 1; }
+            }
+        }
+        span {
+            flex: 1 1;
+        }
+    }
+}
+.app-text {
+    @include centered();
+    &.is-card {
+        padding: 1em 3em;
+        opacity: .6;
+        background-color: $light-black;
+    }
+    &.has-sm-font {
+        @include font-sm();
+        @media screen and (orientation: portrait){
+            @include font-md();
+        }
+    }
+    &.has-md-font {
+        @include font-md();
+    }
+    &.has-lg-font {
+        @include font-lg();
+        font-weight: bolder
+    }
+    &.is-animated {
+        padding-top: 100px;
+        opacity: 0;
+        &.is-visible {
+            padding-top: 0px;
+            opacity: 1;
+            transition: padding-top .7s ease, opacity .7s ease;
+        }
+    }
+}
+.app-title {
+    &-text {
+        @include centered();
+        @include font-lg();
+        @media screen and (orientation: portrait) {
+            width: unset;
+        }
+        width: 50%;
+        font-family: 'Rancho', cursive;
+        color: $violet;
+    }
+}
+.app-footer {
+    @include image-background();
+    font-size: .8rem;
+    color: $violet;
+    @media screen and (orientation: portrait) {
+        @include font-md();
+    }
+    &-contact {
+        @include centered();
+        @include padding();
+    }
+    &-logo {
+        img {
+            object-fit: scale-down;
+            width: 100%;
+            max-height: 8.7em;
+        }
+    }
+    &-links {
+        @include padding();
+        a {
+            font-size: 1.5em;
+            color: $violet;
+            text-decoration: none;
+        }
+        @media screen and (orientation: portrait) {
+            display: none;
+        }
+    }
+    &-developer {
+        @include padding();
+        text-align: center;
+        color: $violet;
+        opacity: 0.8;
+    }
+}
+.app-header {
+    @include absolute();
+    color: $light-black;
+    &-logo {
+        &-back {
+            background-color: $light-pink;
+            padding: .5em 1em;
+            border-radius: 1em;
+        }
+        padding: 1em 2em;
+        a {
+            text-align: center;
+        }
+        img {
+            width: 30vh;
+        }
+        @media screen and (orientation: portrait) {
+            display: none;
+        }
+    }
+    &-collapse {
+        z-index: 20;
+        display: none;
+        @media screen and (orientation: portrait) {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: $white;
+            width: 100vw;
+            height: $navbar-height;
+            padding: 0;
+        }
+        &-button {
+            color: $light-black;
+            background: none;
+            border: none;
+            font-size: 1em;
+            padding: 1vh 2vh;
+            outline: none !important;
+        }
+        &-logo {
+            justify-self: center;
+            height: 8vh;
+        }
+    }
+    &-navbar {
+        @media screen and (orientation: portrait) {
+            transition: height 1s;
+            background-color: none;
+            width: 100vw;
+            height: 100vh;
+            padding: 0;
+            flex-direction: column;
+        }
+        padding: 3vh 1vw;
+        &-links {
+            @media screen and (orientation: portrait) {
+                position: fixed;
+                
+                top: 9vh;
+                width: 100vw;
+                background-color: $white;
+                border: none;
+                padding: 0;
+                border-radius: 0;
+                opacity: 1;
+                height: 91vh;
+                transition: top 1s;
+                &.is-collapsed {
+                    top: -90vh;
+                }
+            }
+            padding: 10px;
+            background-color: $white;
+            opacity: .8;
+            border-radius: 15px;
+            border: 2px solid $black;
+            a { flex: 1 1;
+                text-align: center;
+                text-decoration: none;
+                color: $black;
+                letter-spacing: inherit;
+                transition: letter-spacing .3s;
+                @media screen and (orientation: portrait) {
+                    color: $light-black;
+                    font-size: 2em;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                }
+                @media screen and (min-width: 992px) {
+                    &:hover {
+                        letter-spacing: 1px;
+                        font-weight: bold;
+                        transition: letter-spacing .3s;
+                    }
+                }
+            }
+        }
+    }
+    &-empty { flex: 1 1;
+    }
+    &-contact { flex: 1 1;
+        position: fixed;
+        top: 12vh;
+        right: 0px;
+    }
+}
+.app-carousel {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    &-arrow {
+        position: absolute;
+        background: none;
+        font-size: 3em;
+        padding: .5em;
+        border: none;
+        cursor: pointer;
+        &:focus {
+            outline: none !important;
+        }
+        &.to-left {
+            left: -1em;
+        }
+        &.to-right {
+            right: -1em;
+        }
+        &.is-dark {
+            color: $light-black;
+        }
+        &.is-light {
+            color: $white;
+        }
+    }
+    &-panel {
+        display: flex;
+        flex-direction: row;
+        overflow-x: hidden;
+        align-items: center;
+        &-content {
+            position: relative;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            flex-wrap: nowrap;
+            transition: left 1s;
+            &-slide {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+    }
+}
+.app-picture {
+    &.is-rounded {
+        img {
+            border-radius: 2em;
+        }
+    }
+    img {
+        max-width: 100%;
+        max-height: 90vh;
+    }
+}
+.app-social-media {
+    margin: 1vmax;
+    padding: 0 !important;
+    a {
+        padding: 0 .5em;
+    }
+    svg {
+        font-size: 3em;
+        opacity: 0.7;
+    }
+    &-instagram {
+        svg {
+            color: #833AB4;
+        }
+    }
+    &-facebook {
+        svg {
+            color: #4267B2;
+        }
+    }
+    &-whatsapp {
+        @media screen and (max-width: 992px) {    
+            position: fixed;
+            bottom: 3vh;
+            right: 3vw;
+            font-size: 1.5em;
+        }
+        svg {
+            color: #25D366;
+        }
+    }
+}
+.app-top-image {
+    display: none;
+    @media screen and (orientation: portrait) {
+        display: flex;
+    }
+}
+.app-top-video { 
+    height: 75vh;
+    width: 100%;
+    object-fit: cover;
+    object-position: 100% 47%;
+    margin-bottom: -3px;
+    @media screen and (orientation: portrait) {
+        height: unset;
+    }
+}
+.app-view {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+    @include viewport-height();
+    @include image-background();
+    @include fixed-background();
+        @media screen and (orientation: portrait) {
+            background-image: none !important;
+        }   
+}
+.app-input { flex: 1 1;
+    @extend %control;
+    @media screen and (orientation: portrait) {
+        width: 70%;
+        @include font-sm(); 
+    }
+}
+.app-text-area { flex: 1 1;
+    @extend %control;
+    @media screen and (orientation: portrait) {
+        width: 70%;
+        @include font-sm(); 
+    }
+}
+.app-button { flex: 1 1;
+    @extend %control;
+    @include padding;
+    background-color: $light-pink;
+}
+.app-form {
+    border-radius: .4em;
+    background-color: $light-blue;
+    @include padding();
+    &-row {
+        * {
+            margin: .5em;
+        }
+    }
+    @media screen and (orientation: portrait) {
+        width: 70vw;
+        height: 10vw;
+    }
+}
+
+.app-gob-logo {
+    @include centered();  
+    font-size: .5em;  
+    img {
+        object-fit: scale-down;
+        width: 20em;
+        @media screen and (orientation: portrait) {
+            width: 29vw;
+        }
+    }    
+    &-text {
+        font-size: 1em;
+        @media screen and (orientation: portrait) {
+            font-size: 1.7em;
+        }
+    }
+}
+
+
+.app-circular-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    &-title {
+        text-align: center;
+        color: $violet;
+    }
+    &-box {
+        @include circular();
+        @include image-background();
+        box-shadow: 0px 0px 30px 15px $light-blue;
+        transition: box-shadow .5s;
+        margin: 30px;
+        position: relative;
+        &-filter {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            background-color: $light-pink;
+            border-radius: 100%;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            opacity: 0;
+            transition: opacity .5s;
+            &:hover {
+                opacity: .4;
+            }
+            &-icon {
+                color: $violet;
+                font-size: 2.5em;
+            }
+        }
+        &.has-sm-size {
+            height: 12em;
+            width: 12em;
+        }
+        &.has-md-size {
+            height: 17em;
+            width: 17em;
+        }
+        &.has-lg-size {
+            height: 21em;
+            width: 21em;
+        }
+        &.has-xl-size {
+            height: 25.9em;
+            width: 25.9em;
+        }
+        @media screen and (orientation: portrait) {
+            height: 70vw !important;
+            width: 70vw !important;
+        }
+        &:hover {
+            box-shadow: 0px 0px 30px 30px $light-pink;
+            transition: box-shadow .5s;
+            cursor: pointer;
+        }
+        &:hover > &-text > &-text-title {
+            color: $light-black;
+            transition: color .5s;
+            background-color: $light-pink;
+            transition: background-color .5s;
+        }
+        &-text { 
+            text-align: center;
+            font-size: 0.8em;
+                @media screen and (orientation: portrait) {
+                    @include font-sm();
+                }
+            &.has-alignment-top-right {
+                position: absolute;
+                left: 37%;
+                bottom: 95%    
+            }
+            &.has-alignment-bottom-left {
+                position: absolute;
+                right: 37%;
+                top: 95%;    
+            }
+            &-title {
+                @include font-md();
+                color: $violet;
+                padding: 0.5em;
+                height: 100%;
+                font-weight: bolder;
+                transition: color .5s;
+                transition: background-color .5s;position: relative;
+                text-transform: uppercase;
+                border-radius: 5px;
+            }
+            &-subtitle {
+                color: $violet;               
+                text-transform: uppercase;
+            }
+        }
+    }
+}
+
+.app-google-map {
+    text-align: center;
+    iframe {
+        width: 50em;
+        height: 30em;
+        @media screen and (orientation: portrait) {
+            width: 70vw;
+            height: 70vw;
+    }
+    }
+}
+
+.app-plugin-pages {
+    @include centered();
+        @media screen and (orientation: portrait) {
+            padding: 0;
+    }
+    &-instagram {
+        max-width: 18.7em;
+        h3 {
+            @media screen and (orientation: portrait) {
+               @include font-md();
+           }
+        }
+        a {  
+            font-size: 0px !important;
+        }
+    }
+    &-facebook {
+        h3 {
+            @media screen and (orientation: portrait) {
+                @include font-md();
+            }
+        }
+        iframe {
+            width: 80%;
+            @media screen and (orientation: portrait) {
+                width: 67%;
+            }
+        }
+    }
+}
+
+.app-hl-text {
+    &.is-primary {
+        font-size: 1.1em;
+        color: $cyan;
+        font-weight: bold;
+    }
+    &.is-white {
+        color: $white;
+    }
+    &.is-secondary {
+        @include font-sm();
+        color: $violet;
+        font-weight: bold;
+    }
+    &.is-bold {
+        font-weight: bold;
+    }
+    &.has-sm-font {
+        @include font-sm();
+    }
+    &.has-md-font {
+        @include font-md();
+    }
+    &.has-lg-font {
+        @include font-lg();
+        font-weight: bolder;
+    }
+}
+.app-modal {
+    top: 0;
+    left: 0;
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.9);
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &-box { 
+        &-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-width: 40em;
+            max-height: 35em;
+        }
+        img {
+            object-fit: scale-down;
+            width: 100%;
+            max-width: 40em;
+            max-height: 35em;
+        }
+    }
+}
+.app-youtube-video {
+    iframe {
+        width: 40em;
+        height: 22em;
+        border: none;
+        @media screen and (orientation: portrait) {
+            width: 100%;
+            }
+    }
+}
+.app-text-editor {
+    &-part {
+        width: 100%;
+    }
+    &-add {
+        label {
+            font-size: .5em;
+        }
+        button {
+            background-color: $light-black !important;
+            color: $white;
+            padding: .5em;
+            border-radius: .3em;
+        }
+        border: 1px solid $light-black;
+        padding: 1em;
+        margin: 1em;
+        border-radius: .3em;
+    }
+    button {
+        background: none;
+        border: none;
+    }
+    input {
+        padding: .3em;
+        flex-grow: 1;
+    }
+    small {
+        font-size: .7em;;
+        padding: .3em;
+    }
+}
+.app-fixed {
+    z-index: 100;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+}
